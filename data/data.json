@@ -1,0 +1,103 @@
+{
+  "about": {
+    "name": "Asish Kumar Singh",
+    "tagline": "Full-Stack Mobile And Web Developer",
+    "bio": "I'm a passionate developer learning and growing in the world of web and mobile development. I love creating digital experiences and learning new technologies to build better solutions.",
+    "fullBio": "I'm a developer who's passionate about learning and creating digital experiences. My journey in software development started with curiosity about how websites work, and I've been learning and growing ever since. I enjoy building both web and mobile applications, and I'm always excited to learn new technologies and take on new challenges.",
+    "skills": [
+      "React",
+      "Next.js",
+      "React Native",
+      "TypeScript",
+      "Express.js",
+      "MongoDB",
+      "PostgreSQL",
+      "Firebase",
+      "JavaScript",
+      "Node.js",
+      "TailwindCSS",
+      "Docker",
+      "Git",
+      "AWS",
+      "Python"
+    ],
+    "resumeUrl": "/resume.pdf",
+    "profileImage": "https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg"
+  },
+  "experience": [
+    {
+      "role": "Junior React Native Developer",
+      "company": "Kus Software",
+      "duration": "June-2025 - Present",
+      "details": "Developed and maintained mobile applications using React Native. Integrating with backend services and APIs. Collaborated with designers to implement pixel-perfect designs.",
+      "tech": [
+        "React Native",
+        "JavaScript",
+        "Firebase",
+        "Redux",
+        "Expo",
+        "Android Studio"
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "id": "1",
+      "title": "LetsMeet- Google Meet Clone",
+      "description": "Real-time video conferencing app with screen sharing, chat, and seamless meeting management using Next.js, TypeScript, Stream, and Clerk.",
+      "longDescription": "Built a comprehensive, real-time video conferencing application from the ground up, leveraging the power of Next.js for a performant, server-rendered frontend and TypeScript for robust type safety. The core of the platform is powered by the Stream API, providing high-quality, low-latency video, audio, and screen-sharing capabilities.",
+      "tags": ["Video Conferencing", "Full-Stack"],
+      "tech": ["Clerk", "Stream", "Next.js", "TypeScript", "TailwindCSS"],
+      "image": "/images/letsMeet.png",
+      "github": "https://github.com/Aashish037/Meet",
+      "demo": "https://meetup-steel-sigma.vercel.app/",
+      "challenges": "Implementing real-time inventory updates and handling concurrent user sessions during high-traffic periods.",
+      "outcome": "Launched a private beta for a small group of users, receiving valuable feedback that helped inform future improvements and feature additions."
+    },
+    {
+      "id": "2",
+      "title": "GrubHub - Food Delivery App",
+      "description": "Food Delivery app built with React Native, TypeScript, and Tailwind CSS. Featuring Google Auth, smart search, cart, and smooth navigation, with Appwrite handling the backend and storage.",
+      "longDescription": "Engineered a comprehensive food delivery application using React Native, TypeScript, and Tailwind CSS. It features seamless Google Authentication, a smart search for quick discovery, and a fluid user experience with a responsive cart and smooth navigation. The backend and storage are robustly handled by Appwrite.",
+      "tags": ["Food Delivery", "E-Commerce"],
+      "tech": [
+        "Expo",
+        "TypeScript",
+        "nativeWind",
+        "Expo-Router",
+        "Zustand",
+        "Appwrite",
+        "React Native"
+      ],
+      "image": "https://images.pexels.com/photos/3183153/pexels-photo-3183153.jpeg",
+      "github": "https://github.com/Aashish037/GrubHub",
+      "demo": "",
+      "challenges": "Simulating real-world order flows and testing the app's performance and scalability without live user data or a delivery network.",
+      "outcome": "Developed a robust full-stack portfolio project that demonstrates proficiency in modern mobile technologies and full-lifecycle application development."
+    },
+    {
+      "id": "3",
+      "title": "Chess Game",
+      "description": " Real-time, Playable chess game built focusing on the core mechanics and working principles of platforms like Chess.com.",
+      "longDescription": "Web application that implements a real-time multiplayer chess game. The primary goal of the project was to demystify how online chess platforms function, specifically the mechanics of synchronizing game state and player actions across multiple clients.",
+      "tags": ["Chess", "Multiplayer"],
+      "tech": ["Socket.io", "JavaScript", "Ejs", "Chess.js", "Node.js"],
+      "image": "/images/Chess.png",
+      "github": "https://github.com/Aashish037/Chess-js",
+      "demo": "chess-edxe.onrender.com",
+      "challenges": "Enforcing game rules: Implementing the logic to prevent illegal moves, such as moving a pawn backward or moving a knight through a piece, and handling special cases like check, checkmate, and castling.",
+      "outcome": "Mastered Socket.IO for real-time communication: Gained hands-on experience in building a real-time application and using event-based communication to manage game flow."
+    }
+  ],
+  "contact": {
+    "email": "Aashishsingh1317@gmail.com",
+    "phone": "+91 6291876077",
+    "location": "Kolkata, India",
+    "socials": {
+      "github": "https://github.com/Aashish037",
+      "linkedin": "https://www.linkedin.com/in/asish037/",
+      "twitter": "https://x.com/Asish037",
+      "instagram": "https://www.instagram.com/aashishsinghhhhhh/"
+    }
+  }
+}
