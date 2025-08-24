@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
-import { Mail, Phone, MapPin, Send, CheckCircle } from "lucide-react";
+import { Mail, Phone, MapPin, Send, CheckCircle, AlertCircle } from "lucide-react";
 import emailjs from "@emailjs/browser";
 import data from "@/data/data.json";
 
@@ -19,7 +19,8 @@ export function ContactSection() {
     message: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const { contact } = data;
 
@@ -33,45 +34,82 @@ export function ContactSection() {
     }));
   };
 
+  const validateForm = () => {
+    if (!formData.name || !formData.email || !formData.message) {
+      setErrorMessage("Please fill in all required fields.");
+      setStatus("error");
+      return false;
+    }
+    // Simple email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      setErrorMessage("Please enter a valid email address.");
+      setStatus("error");
+      return false;
+    }
+    return true;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!validateForm()) return;
+
     setIsSubmitting(true);
+    setStatus("idle");
+    setErrorMessage("");
 
     try {
-      // Send email using EmailJS
-      const result = await emailjs.send(
-        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
-        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,
-        {
-          to_email: contact.email,
-          from_name: formData.name,
-          from_email: formData.email,
-          subject: formData.subject || "Contact from Portfolio",
-          message: formData.message,
-        },
-        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
-      );
+      const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
+      const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
+      const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
 
-      // Reset form and show success message
-      setFormData({
-        name: "",
-        email: "",
-        subject: "",
-        message: "",
-      });
-      setIsSubmitting(false);
-      setIsSubmitted(true);
+      if (!serviceId || !templateId || !publicKey) {
+        throw new Error("EmailJS environment variables are missing.");
+      }
 
-      // Hide success message after 3 seconds
-      setTimeout(() => {
-        setIsSubmitted(false);
-      }, 3000);
+      // Try sending email (with 1 retry on failure)
+      let result;
+      try {
+        result = await emailjs.send(
+          serviceId,
+          templateId,
+          {
+            to_email: contact.email,
+            from_name: formData.name,
+            from_email: formData.email,
+            subject: formData.subject || "Contact from Portfolio",
+            message: formData.message,
+          },
+          publicKey
+        );
+      } catch (err) {
+        console.warn("First attempt failed, retrying...", err);
+        result = await emailjs.send(
+          serviceId,
+          templateId,
+          {
+            to_email: contact.email,
+            from_name: formData.name,
+            from_email: formData.email,
+            subject: formData.subject || "Contact from Portfolio",
+            message: formData.message,
+          },
+          publicKey
+        );
+      }
 
       console.log("Email sent successfully:", result);
+
+      setFormData({ name: "", email: "", subject: "", message: "" });
+      setStatus("success");
+      setTimeout(() => setStatus("idle"), 3000);
     } catch (error) {
       console.error("Failed to send email:", error);
+      setErrorMessage("Something went wrong while sending your message. Please try again later.");
+      setStatus("error");
+    } finally {
       setIsSubmitting(false);
-      // You can add error handling here (show error message to user)
     }
   };
 
@@ -92,9 +130,7 @@ export function ContactSection() {
       icon: <MapPin className="h-5 w-5" />,
       label: "Location",
       value: contact.location,
-      href: `https://maps.google.com/?q=${encodeURIComponent(
-        contact.location
-      )}`,
+      href: `https://maps.google.com/?q=${encodeURIComponent(contact.location)}`,
     },
   ];
 
@@ -144,15 +180,9 @@ export function ContactSection() {
                       hover:shadow-lg hover:shadow-blue-500/20
                       scroll-trigger
                       ${isVisible ? "animate" : ""}
-                      ${
-                        index % 2 === 0
-                          ? "slide-in-from-left-4"
-                          : "slide-in-from-right-4"
-                      }
+                      ${index % 2 === 0 ? "slide-in-from-left-4" : "slide-in-from-right-4"}
                     `}
-                    style={{
-                      transitionDelay: `${index * 150}ms`,
-                    }}
+                    style={{ transitionDelay: `${index * 150}ms` }}
                   >
                     <div className="p-3 bg-blue-500/10 rounded-lg">
                       {info.icon}
@@ -179,9 +209,7 @@ export function ContactSection() {
           {/* Contact Form */}
           <Card className="bg-card/50 backdrop-blur-sm border border-border/50">
             <CardHeader>
-              <CardTitle className="text-2xl font-bold">
-                Send me a message
-              </CardTitle>
+              <CardTitle className="text-2xl font-bold">Send me a message</CardTitle>
             </CardHeader>
             <CardContent>
               <form onSubmit={handleSubmit} className="space-y-6">
@@ -242,6 +270,13 @@ export function ContactSection() {
                   />
                 </div>
 
+                {status === "error" && (
+                  <div className="flex items-center text-red-500 text-sm">
+                    <AlertCircle className="h-4 w-4 mr-2" />
+                    {errorMessage}
+                  </div>
+                )}
+
                 <Button
                   type="submit"
                   disabled={isSubmitting}
@@ -252,7 +287,7 @@ export function ContactSection() {
                       <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
                       <span>Sending...</span>
                     </div>
-                  ) : isSubmitted ? (
+                  ) : status === "success" ? (
                     <div className="flex items-center space-x-2">
                       <CheckCircle className="h-4 w-4" />
                       <span>Message Sent!</span>
