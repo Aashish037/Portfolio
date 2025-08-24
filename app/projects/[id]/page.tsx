@@ -1,11 +1,18 @@
-import Image from 'next/image';
-import Link from 'next/link';
-import { notFound } from 'next/navigation';
-import { Card, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Github, ExternalLink, ArrowLeft, Target, Lightbulb, TrendingUp } from 'lucide-react';
-import data from '@/data/data.json';
+import Image from "next/image";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+  Github,
+  ExternalLink,
+  ArrowLeft,
+  Target,
+  Lightbulb,
+  TrendingUp,
+} from "lucide-react";
+import data from "@/data/data.json";
 
 interface ProjectPageProps {
   params: {
@@ -21,15 +28,15 @@ export function generateStaticParams() {
 
 export function generateMetadata({ params }: ProjectPageProps) {
   const project = data.projects.find((p) => p.id === params.id);
-  
+
   if (!project) {
     return {
-      title: 'Project Not Found',
+      title: "Project Not Found",
     };
   }
 
   return {
-    title: `${project.title} - Alex Johnson`,
+    title: `${project.title} - Asish Kumar Singh`,
     description: project.description,
     openGraph: {
       title: project.title,
@@ -76,14 +83,22 @@ export default function ProjectDetail({ params }: ProjectPageProps) {
           </div>
 
           <div className="flex flex-wrap gap-4">
-            <Button size="lg" asChild className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700">
+            <Button
+              size="lg"
+              asChild
+              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+            >
               <a href={project.demo} target="_blank" rel="noopener noreferrer">
                 <ExternalLink className="mr-2 h-4 w-4" />
                 Live Demo
               </a>
             </Button>
             <Button size="lg" variant="outline" asChild>
-              <a href={project.github} target="_blank" rel="noopener noreferrer">
+              <a
+                href={project.github}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <Github className="mr-2 h-4 w-4" />
                 View Code
               </a>
@@ -153,14 +168,30 @@ export default function ProjectDetail({ params }: ProjectPageProps) {
             <Card className="p-6">
               <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
               <div className="space-y-3">
-                <Button variant="outline" className="w-full justify-start" asChild>
-                  <a href={project.demo} target="_blank" rel="noopener noreferrer">
+                <Button
+                  variant="outline"
+                  className="w-full justify-start"
+                  asChild
+                >
+                  <a
+                    href={project.demo}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     <ExternalLink className="mr-2 h-4 w-4" />
                     Live Demo
                   </a>
                 </Button>
-                <Button variant="outline" className="w-full justify-start" asChild>
-                  <a href={project.github} target="_blank" rel="noopener noreferrer">
+                <Button
+                  variant="outline"
+                  className="w-full justify-start"
+                  asChild
+                >
+                  <a
+                    href={project.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     <Github className="mr-2 h-4 w-4" />
                     Source Code
                   </a>
@@ -171,11 +202,18 @@ export default function ProjectDetail({ params }: ProjectPageProps) {
             <Card className="p-6 bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 border-none">
               <div className="text-center space-y-4">
                 <Lightbulb className="h-12 w-12 mx-auto text-yellow-500" />
-                <h3 className="text-lg font-semibold">Interested in Similar Work?</h3>
+                <h3 className="text-lg font-semibold">
+                  Interested in Similar Work?
+                </h3>
                 <p className="text-sm text-muted-foreground">
-                  Let's discuss your project requirements and see how I can help bring your ideas to life.
+                  Let&apos;s discuss your project requirements and see how I can help
+                  bring your ideas to life.
                 </p>
-                <Button size="sm" asChild className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700">
+                <Button
+                  size="sm"
+                  asChild
+                  className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+                >
                   <Link href="/contact">Get In Touch</Link>
                 </Button>
               </div>
@@ -191,7 +229,10 @@ export default function ProjectDetail({ params }: ProjectPageProps) {
               .filter((p) => p.id !== project.id)
               .slice(0, 3)
               .map((relatedProject) => (
-                <Card key={relatedProject.id} className="group hover:shadow-lg transition-all duration-300 overflow-hidden">
+                <Card
+                  key={relatedProject.id}
+                  className="group hover:shadow-lg transition-all duration-300 overflow-hidden"
+                >
                   <div className="aspect-video relative">
                     <Image
                       src={relatedProject.image}
@@ -207,7 +248,12 @@ export default function ProjectDetail({ params }: ProjectPageProps) {
                     <p className="text-sm text-muted-foreground mb-3">
                       {relatedProject.description.substring(0, 100)}...
                     </p>
-                    <Button variant="ghost" size="sm" asChild className="p-0 h-auto">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      asChild
+                      className="p-0 h-auto"
+                    >
                       <Link href={`/projects/${relatedProject.id}`}>
                         View Project →
                       </Link>

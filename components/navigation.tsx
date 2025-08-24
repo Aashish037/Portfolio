@@ -56,9 +56,7 @@ export function Navigation() {
           <div className="flex items-center justify-between mb-6">
             {!isCollapsed && (
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-gradient-to-br from-orange-400 to-blue-500 rounded-lg flex items-center justify-center text-white font-bold text-sm">
-                  AP
-                </div>
+                
                 <div>
                   <h1 className="text-lg font-bold text-blue-400">
                     Asish Kumar Singh

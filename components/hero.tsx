@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Download, ArrowRight, Github, Linkedin, Mail } from "lucide-react";
 import data from "@/data/data.json";
+import { motion } from "framer-motion";
 
 export function Hero() {
   const { about, contact } = data;
@@ -19,27 +20,57 @@ export function Hero() {
       <div className="relative z-10 max-w-6xl mx-auto">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Column - Text Content */}
-          <div className="space-y-8 text-center lg:text-left">
-            <div className="space-y-4">
+          <motion.div
+            className="space-y-8 text-center lg:text-left"
+            initial={{ opacity: 0, x: -60 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+          >
+            <motion.div
+              className="space-y-4"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+            >
               <Badge variant="secondary" className="text-sm">
                 👋 Welcome to my portfolio
               </Badge>
-              <h1 className="text-3xl lg:text-5xl font-bold leading-tight">
-                Hi, I'm{" "}
+              <motion.h1
+                className="text-3xl lg:text-5xl font-bold leading-tight"
+                initial={{ opacity: 0, y: 40 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
+              >
+                Hi, I&apos;m{" "}
                 <span className="bg-gradient-to-r from-indigo-600 to-cyan-600 bg-clip-text text-transparent">
                   {about.name}
                 </span>
-              </h1>
-              <h2 className="text-xl lg:text-2xl text-muted-foreground font-medium">
+              </motion.h1>
+              <motion.h2
+                className="text-xl lg:text-2xl text-muted-foreground font-medium"
+                initial={{ opacity: 0, y: 40 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
+              >
                 {about.tagline}
-              </h2>
-              <p className="text-base lg:text-lg text-muted-foreground max-w-2xl leading-relaxed">
+              </motion.h2>
+              <motion.p
+                className="text-base lg:text-lg text-muted-foreground max-w-2xl leading-relaxed"
+                initial={{ opacity: 0, y: 40 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
+              >
                 {about.bio}
-              </p>
-            </div>
+              </motion.p>
+            </motion.div>
 
             {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+            <motion.div
+              className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.7, ease: "easeOut" }}
+            >
               <Button
                 size="lg"
                 asChild
@@ -56,10 +87,15 @@ export function Hero() {
                   Download CV
                 </a>
               </Button>
-            </div>
+            </motion.div>
 
             {/* Social Links */}
-            <div className="flex gap-4 justify-center lg:justify-start">
+            <motion.div
+              className="flex gap-4 justify-center lg:justify-start"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.9, ease: "easeOut" }}
+            >
               <Button size="sm" variant="ghost" asChild>
                 <a
                   href={contact.socials.github}
@@ -83,13 +119,23 @@ export function Hero() {
                   <Mail className="h-5 w-5" />
                 </a>
               </Button>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
 
           {/* Right Column - Profile Image */}
-          <div className="flex justify-center lg:justify-end">
+          <motion.div
+            className="flex justify-center lg:justify-end"
+            initial={{ opacity: 0, x: 60 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.9, delay: 0.5, ease: "easeOut" }}
+          >
             <div className="relative">
-              <div className="w-80 h-80 lg:w-96 lg:h-96 relative">
+              <motion.div
+                className="w-80 h-80 lg:w-96 lg:h-96 relative"
+                initial={{ scale: 0.85, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ duration: 0.9, delay: 0.7, ease: "easeOut" }}
+              >
                 {/* Decorative rings */}
                 <div className="absolute inset-0 rounded-full bg-gradient-to-r from-indigo-600 to-cyan-600 p-1">
                   <div className="w-full h-full rounded-full bg-background"></div>
@@ -103,24 +149,39 @@ export function Hero() {
                     priority
                   />
                 </div>
-              </div>
+              </motion.div>
               {/* Floating elements */}
-              <div className="absolute -top-4 -right-4 w-24 h-24 bg-gradient-to-r from-indigo-600 to-cyan-600 rounded-full flex items-center justify-center text-white font-bold text-lg">
+              <motion.div
+                className="absolute -top-4 -right-4 w-24 h-24 bg-gradient-to-r from-indigo-600 to-cyan-600 rounded-full flex items-center justify-center text-white font-bold text-lg"
+                initial={{ opacity: 0, scale: 0.7, y: -20, x: 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0, x: 0 }}
+                transition={{ duration: 0.7, delay: 1.1, ease: "easeOut" }}
+              >
                 👨‍💻
-              </div>
-              <div className="absolute -bottom-4 -left-4 w-20 h-20 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full flex items-center justify-center text-white font-bold">
+              </motion.div>
+              <motion.div
+                className="absolute -bottom-4 -left-4 w-20 h-20 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full flex items-center justify-center text-white font-bold"
+                initial={{ opacity: 0, scale: 0.7, y: 20, x: -20 }}
+                animate={{ opacity: 1, scale: 1, y: 0, x: 0 }}
+                transition={{ duration: 0.7, delay: 1.2, ease: "easeOut" }}
+              >
                 ⚡
-              </div>
+              </motion.div>
             </div>
-          </div>
+          </motion.div>
         </div>
 
         {/* Scroll Indicator */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
+        <motion.div
+          className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 1.3, ease: "easeOut" }}
+        >
           <div className="w-6 h-10 border-2 border-muted-foreground rounded-full flex justify-center">
             <div className="w-1 h-3 bg-muted-foreground rounded-full mt-2 animate-scroll"></div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

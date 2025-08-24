@@ -12,6 +12,15 @@ import emailjs from "@emailjs/browser";
 import data from "@/data/data.json";
 
 export function ContactPreview() {
+  // React-compliant: call hooks explicitly for each contact info item (3)
+  const contactInfoHook0 = useScrollAnimation();
+  const contactInfoHook1 = useScrollAnimation();
+  const contactInfoHook2 = useScrollAnimation();
+  const contactInfoHooks = [
+    contactInfoHook0,
+    contactInfoHook1,
+    contactInfoHook2,
+  ];
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -149,12 +158,12 @@ This message was sent from your portfolio contact form.
       <div className="max-w-7xl mx-auto space-y-12">
         <div className="text-center">
           <h2 className="text-3xl lg:text-5xl font-bold bg-gradient-to-r from-indigo-600 to-cyan-600 bg-clip-text text-transparent mb-4">
-            Let's Get in Touch
+            Let&apos;s Get in Touch
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
             Ready to bring innovative ideas to life? Whether you want to discuss
             new opportunities, partner on a project, or just want to say hello,
-            I'd love to hear from you.
+            I&apos;d love to hear from you.
           </p>
         </div>
 
@@ -168,33 +177,32 @@ This message was sent from your portfolio contact form.
               <p className="text-muted-foreground mb-8">
                 Whether you have a project in mind, want to discuss new
                 opportunities, partner on something exciting, or just want to
-                say hello, I'm always interested in hearing about what you're
-                working on.
+                say hello, I&apos;m always interested in hearing about what
+                you&apos;re working on.
               </p>
             </div>
 
             <div className="space-y-6">
               {contactInfo.map((info, index) => {
-                const { elementRef, isVisible } = useScrollAnimation();
-
+                const { elementRef, isVisible } = contactInfoHooks[index];
                 return (
                   <div
                     key={info.label}
                     ref={elementRef}
                     className={`
-                      flex items-center space-x-4 p-4 rounded-lg
-                      bg-card/50 backdrop-blur-sm border border-border/50
-                      transition-all duration-500 ease-out
-                      transform hover:scale-105 hover:-translate-y-1
-                      hover:shadow-lg hover:shadow-blue-500/20
-                      scroll-trigger
-                      ${isVisible ? "animate" : ""}
-                      ${
-                        index % 2 === 0
-                          ? "slide-in-from-left-4"
-                          : "slide-in-from-right-4"
-                      }
-                    `}
+                        flex items-center space-x-4 p-4 rounded-lg
+                        bg-card/50 backdrop-blur-sm border border-border/50
+                        transition-all duration-500 ease-out
+                        transform hover:scale-105 hover:-translate-y-1
+                        hover:shadow-lg hover:shadow-blue-500/20
+                        scroll-trigger
+                        ${isVisible ? "animate" : ""}
+                        ${
+                          index % 2 === 0
+                            ? "slide-in-from-left-4"
+                            : "slide-in-from-right-4"
+                        }
+                      `}
                     style={{
                       transitionDelay: `${index * 150}ms`,
                     }}

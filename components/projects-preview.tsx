@@ -13,6 +13,79 @@ export function ProjectsPreview() {
   const { projects } = data;
   const featuredProjects = projects.slice(0, 3);
 
+  // Precompute hooks for up to 3 featured projects
+  const projectHooks = [
+    useScrollAnimation(),
+    useScrollAnimation(),
+    useScrollAnimation(),
+  ];
+  // Precompute hooks for up to 8 tag badges per project
+  const tagHooksArr = [
+    [
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+    ],
+    [
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+    ],
+    [
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+    ],
+  ];
+  // Precompute hooks for up to 8 tech badges per project
+  const techHooksArr = [
+    [
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+    ],
+    [
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+    ],
+    [
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+    ],
+  ];
+
   return (
     <section className="p-6 lg:p-12">
       <div className="max-w-7xl mx-auto space-y-12">
@@ -21,14 +94,14 @@ export function ProjectsPreview() {
             Featured Projects
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            A showcase of my recent work and the technologies I'm passionate
-            about
+            A showcase of my recent work and the technologies I&apos;m
+            passionate about
           </p>
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {featuredProjects.map((project, index) => {
-            const { elementRef, isVisible } = useScrollAnimation();
+            const { elementRef, isVisible } = projectHooks[index];
 
             return (
               <Card
@@ -104,21 +177,17 @@ export function ProjectsPreview() {
                 <CardHeader className="relative z-10">
                   {/* Badges with modern hover effect */}
                   <div className="flex flex-wrap gap-2 mb-3">
-                    {project.tags.map((tag, tagIndex) => {
+                    {project.tags.slice(0, 8).map((tag, tagIndex) => {
                       const { elementRef: badgeRef, isVisible: badgeVisible } =
-                        useScrollAnimation();
-
+                        tagHooksArr[index][tagIndex];
                       return (
                         <div
                           key={tag}
                           ref={badgeRef}
-                          className={`
-                          badge-scroll-trigger
-                          ${badgeVisible ? "animate" : ""}
-                        `}
-                          style={{
-                            transitionDelay: `${tagIndex * 50}ms`,
-                          }}
+                          className={`badge-scroll-trigger ${
+                            badgeVisible ? "animate" : ""
+                          }`}
+                          style={{ transitionDelay: `${tagIndex * 50}ms` }}
                         >
                           <Badge
                             variant="secondary"
@@ -165,23 +234,19 @@ export function ProjectsPreview() {
 
                   {/* Tech Badges with modern hover effect */}
                   <div className="flex flex-wrap gap-2">
-                    {project.tech.slice(0, 4).map((tech, techIndex) => {
+                    {project.tech.slice(0, 8).map((tech, techIndex) => {
                       const {
                         elementRef: techBadgeRef,
                         isVisible: techBadgeVisible,
-                      } = useScrollAnimation();
-
+                      } = techHooksArr[index][techIndex];
                       return (
                         <div
                           key={tech}
                           ref={techBadgeRef}
-                          className={`
-                          badge-scroll-trigger
-                          ${techBadgeVisible ? "animate" : ""}
-                        `}
-                          style={{
-                            transitionDelay: `${techIndex * 30}ms`,
-                          }}
+                          className={`badge-scroll-trigger ${
+                            techBadgeVisible ? "animate" : ""
+                          }`}
+                          style={{ transitionDelay: `${techIndex * 30}ms` }}
                         >
                           <Badge
                             variant="outline"
@@ -272,11 +337,10 @@ export function ProjectsPreview() {
           <Button
             asChild
             size="lg"
-            variant="outline"
             className="
-              bg-gradient-to-r from-blue-600/10 to-purple-600/10
-              hover:from-blue-600/20 hover:to-purple-600/20
-              border-blue-500/30 hover:border-blue-400/50
+              bg-gradient-to-r from-blue-600 to-purple-600
+              hover:from-blue-700 hover:to-purple-700
+              text-white font-medium
               transition-all duration-300
               transform hover:scale-105
             "

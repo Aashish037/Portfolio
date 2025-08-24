@@ -24,6 +24,8 @@ export function AboutPreview() {
   const { about } = data;
   const [activeTab, setActiveTab] = useState("journey");
 
+  // --- Precompute hooks for animated sections ---
+  // Stats
   const stats = [
     {
       icon: <User className="h-8 w-8" />,
@@ -43,14 +45,41 @@ export function AboutPreview() {
     },
     {
       icon: <Award className="h-8 w-8" />,
-      title: "Clients",
-      value: "Happy & Satisfied",
+      title: "Awards",
+      value: "2x Hackathon",
       color: "text-green-500",
       bgColor: "bg-green-500/10",
       borderColor: "border-green-500/20",
     },
   ];
+  // For stats (3 items)
+  const statHook0 = useScrollAnimation();
+  const statHook1 = useScrollAnimation();
+  const statHook2 = useScrollAnimation();
+  const statHooks = [statHook0, statHook1, statHook2];
 
+  // Skills (up to 8)
+  const skills = about.skills.slice(0, 8);
+  const skillHook0 = useScrollAnimation();
+  const skillHook1 = useScrollAnimation();
+  const skillHook2 = useScrollAnimation();
+  const skillHook3 = useScrollAnimation();
+  const skillHook4 = useScrollAnimation();
+  const skillHook5 = useScrollAnimation();
+  const skillHook6 = useScrollAnimation();
+  const skillHook7 = useScrollAnimation();
+  const skillHooks = [
+    skillHook0,
+    skillHook1,
+    skillHook2,
+    skillHook3,
+    skillHook4,
+    skillHook5,
+    skillHook6,
+    skillHook7,
+  ];
+
+  // Fun Facts
   const funFacts = [
     {
       icon: <Code className="h-6 w-6" />,
@@ -81,6 +110,14 @@ export function AboutPreview() {
       bgColor: "bg-orange-500/10",
     },
   ];
+  // For fun facts (4 items)
+  const funFactHook0 = useScrollAnimation();
+  const funFactHook1 = useScrollAnimation();
+  const funFactHook2 = useScrollAnimation();
+  const funFactHook3 = useScrollAnimation();
+  const funFactHooks = [funFactHook0, funFactHook1, funFactHook2, funFactHook3];
+
+  // ...existing code continues (render and logic)...
 
   const tabs = [
     { id: "journey", label: "My Journey", icon: <Globe className="h-4 w-4" /> },
@@ -123,8 +160,7 @@ export function AboutPreview() {
         {/* Stats Cards with Hover Effects */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {stats.map((stat, index) => {
-            const { elementRef, isVisible } = useScrollAnimation();
-
+            const { elementRef, isVisible } = statHooks[index];
             return (
               <Card
                 key={stat.title}
@@ -172,7 +208,7 @@ export function AboutPreview() {
           <div className="space-y-8">
             <div>
               <h3 className="text-2xl font-bold mb-2">
-                Hello, I'm {about.name}
+                Hello, I&apos;m {about.name}
               </h3>
               <h4 className="text-lg text-blue-600 font-semibold mb-6">
                 {about.tagline}
@@ -233,9 +269,8 @@ export function AboutPreview() {
             </div>
 
             <div className="flex flex-wrap gap-3">
-              {about.skills.slice(0, 8).map((skill, index) => {
-                const { elementRef, isVisible } = useScrollAnimation();
-
+              {skills.map((skill, index) => {
+                const { elementRef, isVisible } = skillHooks[index];
                 return (
                   <div
                     key={skill}
@@ -278,8 +313,7 @@ export function AboutPreview() {
             </h3>
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
               {funFacts.map((fact, index) => {
-                const { elementRef, isVisible } = useScrollAnimation();
-
+                const { elementRef, isVisible } = funFactHooks[index];
                 return (
                   <div
                     key={fact.label}

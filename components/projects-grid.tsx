@@ -23,10 +23,279 @@ interface ProjectsGridProps {
 }
 
 export function ProjectsGrid({ projects }: ProjectsGridProps) {
+  // Cap for max projects, tags, and techs per project
+  const MAX_PROJECTS = 12;
+  const MAX_TAGS = 8;
+  const MAX_TECHS = 8;
+
+  // Precompute hooks for each project card (12)
+  const projectHooks = [
+    useScrollAnimation(),
+    useScrollAnimation(),
+    useScrollAnimation(),
+    useScrollAnimation(),
+    useScrollAnimation(),
+    useScrollAnimation(),
+    useScrollAnimation(),
+    useScrollAnimation(),
+    useScrollAnimation(),
+    useScrollAnimation(),
+    useScrollAnimation(),
+    useScrollAnimation(),
+  ];
+  // Precompute hooks for each tag badge in each project (12 x 8)
+  const tagHooksArr = [
+    [
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+    ],
+    [
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+    ],
+    [
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+    ],
+    [
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+    ],
+    [
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+    ],
+    [
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+    ],
+    [
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+    ],
+    [
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+    ],
+    [
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+    ],
+    [
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+    ],
+    [
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+    ],
+    [
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+    ],
+  ];
+  // Precompute hooks for each tech badge in each project (12 x 8)
+  const techHooksArr = [
+    [
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+    ],
+    [
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+    ],
+    [
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+    ],
+    [
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+    ],
+    [
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+    ],
+    [
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+    ],
+    [
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+    ],
+    [
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+    ],
+    [
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+    ],
+    [
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+    ],
+    [
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+    ],
+    [
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+    ],
+  ];
+
   return (
     <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {projects.map((project: any, index: number) => {
-        const { elementRef, isVisible } = useScrollAnimation();
+      {projects.slice(0, MAX_PROJECTS).map((project: any, index: number) => {
+        const { elementRef, isVisible } = projectHooks[index];
+        const tagHooks = tagHooksArr[index];
+        const techHooks = techHooksArr[index];
 
         return (
           <Card
@@ -101,25 +370,26 @@ export function ProjectsGrid({ projects }: ProjectsGridProps) {
             <CardHeader className="relative z-10">
               {/* Badges with modern hover effect */}
               <div className="flex flex-wrap gap-2 mb-3">
-                {project.tags.map((tag: string, tagIndex: number) => {
-                  const { elementRef: badgeRef, isVisible: badgeVisible } =
-                    useScrollAnimation();
-
-                  return (
-                    <div
-                      key={tag}
-                      ref={badgeRef}
-                      className={`
+                {project.tags
+                  .slice(0, MAX_TAGS)
+                  .map((tag: string, tagIndex: number) => {
+                    const { elementRef: badgeRef, isVisible: badgeVisible } =
+                      tagHooks[tagIndex];
+                    return (
+                      <div
+                        key={tag}
+                        ref={badgeRef}
+                        className={`
                         badge-scroll-trigger
                         ${badgeVisible ? "animate" : ""}
                       `}
-                      style={{
-                        transitionDelay: `${tagIndex * 50}ms`,
-                      }}
-                    >
-                      <Badge
-                        variant="secondary"
-                        className="
+                        style={{
+                          transitionDelay: `${tagIndex * 50}ms`,
+                        }}
+                      >
+                        <Badge
+                          variant="secondary"
+                          className="
                           text-xs font-medium
                           bg-gradient-to-r from-blue-600/20 to-purple-600/20
                           hover:from-blue-600 hover:to-purple-600
@@ -129,12 +399,12 @@ export function ProjectsGrid({ projects }: ProjectsGridProps) {
                           hover:scale-110 hover:shadow-lg hover:shadow-blue-500/25
                           transform hover:-translate-y-1
                         "
-                      >
-                        {tag}
-                      </Badge>
-                    </div>
-                  );
-                })}
+                        >
+                          {tag}
+                        </Badge>
+                      </div>
+                    );
+                  })}
               </div>
               <CardTitle
                 className="
@@ -162,27 +432,28 @@ export function ProjectsGrid({ projects }: ProjectsGridProps) {
 
               {/* Tech Badges with modern hover effect */}
               <div className="flex flex-wrap gap-2">
-                {project.tech.map((tech: string, techIndex: number) => {
-                  const {
-                    elementRef: techBadgeRef,
-                    isVisible: techBadgeVisible,
-                  } = useScrollAnimation();
-
-                  return (
-                    <div
-                      key={tech}
-                      ref={techBadgeRef}
-                      className={`
+                {project.tech
+                  .slice(0, MAX_TECHS)
+                  .map((tech: string, techIndex: number) => {
+                    const {
+                      elementRef: techBadgeRef,
+                      isVisible: techBadgeVisible,
+                    } = techHooks[techIndex];
+                    return (
+                      <div
+                        key={tech}
+                        ref={techBadgeRef}
+                        className={`
                         badge-scroll-trigger
                         ${techBadgeVisible ? "animate" : ""}
                       `}
-                      style={{
-                        transitionDelay: `${techIndex * 30}ms`,
-                      }}
-                    >
-                      <Badge
-                        variant="outline"
-                        className="
+                        style={{
+                          transitionDelay: `${techIndex * 30}ms`,
+                        }}
+                      >
+                        <Badge
+                          variant="outline"
+                          className="
                           text-xs font-medium
                           bg-muted/50 hover:bg-blue-600/20
                           text-muted-foreground hover:text-blue-300
@@ -191,12 +462,12 @@ export function ProjectsGrid({ projects }: ProjectsGridProps) {
                           hover:scale-105 hover:shadow-md hover:shadow-blue-500/20
                           transform hover:-translate-y-0.5
                         "
-                      >
-                        {tech}
-                      </Badge>
-                    </div>
-                  );
-                })}
+                        >
+                          {tech}
+                        </Badge>
+                      </div>
+                    );
+                  })}
               </div>
 
               {/* View Details Button with modern hover effect */}

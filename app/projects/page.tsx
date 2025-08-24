@@ -36,8 +36,8 @@ export default function Projects() {
             Have a Project in Mind?
           </h3>
           <p className="text-muted-foreground mb-6">
-            I'm always interested in new opportunities and exciting projects.
-            Let's discuss how we can work together.
+            I&apos;m always interested in new opportunities and exciting projects.
+            Let&apos;s discuss how we can work together.
           </p>
           <Button
             size="lg"

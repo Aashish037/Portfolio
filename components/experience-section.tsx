@@ -8,6 +8,101 @@ import { Building2, Calendar, Sparkles } from "lucide-react";
 import data from "@/data/data.json";
 
 export function ExperienceSection() {
+  // React-compliant: call hooks explicitly for each experience (cap at 8)
+  const expHooks = [
+    useScrollAnimation(),
+    useScrollAnimation(),
+    useScrollAnimation(),
+    useScrollAnimation(),
+    useScrollAnimation(),
+    useScrollAnimation(),
+    useScrollAnimation(),
+    useScrollAnimation(),
+  ];
+
+  // For each experience, precompute up to 8 project hooks (2D array)
+  const projHooksArr = [
+    [
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+    ],
+    [
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+    ],
+    [
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+    ],
+    [
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+    ],
+    [
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+    ],
+    [
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+    ],
+    [
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+    ],
+    [
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+    ],
+  ];
   const { experience } = data;
 
   return (
@@ -27,8 +122,8 @@ export function ExperienceSection() {
         {/* Experience Cards */}
         <div className="space-y-8">
           {experience.map((exp, index) => {
-            const { elementRef, isVisible } = useScrollAnimation();
-
+            const { elementRef, isVisible } = expHooks[index];
+            const projHooks = projHooksArr[index];
             return (
               <div
                 key={index}
@@ -75,70 +170,59 @@ export function ExperienceSection() {
                           </div>
                         </div>
 
-                        <div className="space-y-2">
-                          {exp.details
-                            .split(". ")
-                            .filter((point) => point.trim())
-                            .map((point, pointIndex) => (
-                              <div
-                                key={pointIndex}
-                                className="flex items-start gap-2"
-                              >
-                                <div className="w-1.5 h-1.5 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
-                                <p className="text-muted-foreground leading-relaxed text-lg">
-                                  {point.trim()}
-                                </p>
-                              </div>
-                            ))}
-                        </div>
-                      </div>
-
-                      {/* Right Side - Tech Stack */}
-                      <div className="lg:w-80 space-y-4">
-                        <div className="flex items-center gap-2">
-                          <Sparkles className="h-4 w-4 text-purple-500" />
-                          <h4 className="font-semibold text-foreground">
-                            Technologies Used
-                          </h4>
-                        </div>
-
-                        <div className="flex flex-wrap gap-2">
-                          {exp.tech.map((tech, techIndex) => {
-                            const {
-                              elementRef: badgeRef,
-                              isVisible: badgeVisible,
-                            } = useScrollAnimation();
-
-                            return (
-                              <div
-                                key={tech}
-                                ref={badgeRef}
-                                className={`
-                                  badge-scroll-trigger
-                                  ${badgeVisible ? "animate" : ""}
-                                `}
-                                style={{
-                                  transitionDelay: `${techIndex * 50}ms`,
-                                }}
-                              >
-                                <Badge
-                                  variant="outline"
-                                  className="
-                                    text-xs font-medium
-                                    bg-muted/30 hover:bg-blue-500/20
-                                    text-muted-foreground hover:text-blue-300
-                                    border-border hover:border-blue-500/50
-                                    transition-all duration-300 
-                                    hover:scale-110 hover:shadow-lg hover:shadow-blue-500/20
-                                    transform hover:-translate-y-1
-                                    group-hover:border-blue-400/50
-                                  "
+                        {/* Projects Section */}
+                        <div className="space-y-4 mt-4">
+                          {exp.projects &&
+                            exp.projects.map((project, pIdx) => {
+                              const {
+                                elementRef: projRef,
+                                isVisible: projVisible,
+                              } = projHooks[pIdx];
+                              return (
+                                <div
+                                  key={project.name}
+                                  ref={projRef}
+                                  className={`badge-scroll-trigger ${
+                                    projVisible ? "animate" : ""
+                                  }`}
+                                  style={{ transitionDelay: `${pIdx * 100}ms` }}
                                 >
-                                  {tech}
-                                </Badge>
-                              </div>
-                            );
-                          })}
+                                  <Card className="mb-2 bg-background/80 border border-border/40 shadow-none hover:shadow-lg transition-all duration-300 group-hover:border-blue-400/40">
+                                    <CardHeader className="flex flex-row items-center gap-3 p-4 pb-2">
+                                      <CardTitle className="text-lg font-semibold text-blue-500 flex-1">
+                                        <a
+                                          href={project.url}
+                                          target="_blank"
+                                          rel="noopener noreferrer"
+                                          className="hover:underline"
+                                        >
+                                          {project.name}
+                                        </a>
+                                      </CardTitle>
+                                      <div className="flex flex-wrap gap-1">
+                                        {project.tech.map((tech, tIdx) => (
+                                          <Badge
+                                            key={tech}
+                                            variant="outline"
+                                            className="text-xs font-medium bg-muted/30 hover:bg-blue-500/20 text-muted-foreground hover:text-blue-300 border-border hover:border-blue-500/50 transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-blue-500/20 transform hover:-translate-y-1 group-hover:border-blue-400/50"
+                                            style={{
+                                              transitionDelay: `${tIdx * 40}ms`,
+                                            }}
+                                          >
+                                            {tech}
+                                          </Badge>
+                                        ))}
+                                      </div>
+                                    </CardHeader>
+                                    <CardContent className="p-4 pt-0">
+                                      <p className="text-muted-foreground text-base mb-2">
+                                        {project.details}
+                                      </p>
+                                    </CardContent>
+                                  </Card>
+                                </div>
+                              );
+                            })}
                         </div>
                       </div>
                     </div>
@@ -156,16 +240,16 @@ export function ExperienceSection() {
               Ready to Build Something Amazing?
             </h3>
             <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-              Let's collaborate on your next project. Whether it's a web app,
-              mobile app, or something entirely new, I'm excited to bring your
-              vision to life.
+              Let&apos;s collaborate on your next project. Whether it&apos;s a
+              web app, mobile app, or something entirely new, I&apos;m excited
+              to bring your vision to life.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
                 href="/contact"
                 className="inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-medium rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-lg"
               >
-                Let's Talk
+                Let&apos;s Talk
               </a>
               <a
                 href="/projects"

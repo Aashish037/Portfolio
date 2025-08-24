@@ -2,10 +2,11 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
-import { Navigation } from "@/components/navigation";
 import { SidebarProvider } from "@/components/sidebar-context";
-import { MainContent } from "@/components/main-content";
-import { Toaster } from "@/components/ui/sonner";
+import { AppWrapper } from "@/components/app-wrapper";
+import { PerformanceMonitor } from "@/components/performance-monitor";
+import { PreloadResources } from "@/components/preload-resources";
+import { ServiceWorkerRegister } from "@/components/service-worker-register";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -57,7 +58,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <PreloadResources />
+      </head>
       <body className={inter.className} style={{ overflowX: "hidden" }}>
+        <PerformanceMonitor />
+        <ServiceWorkerRegister />
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -65,12 +71,8 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <SidebarProvider>
-            <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-950 dark:via-gray-800 dark:to-gray-900 relative">
-              <Navigation />
-              <MainContent>{children}</MainContent>
-            </div>
+            <AppWrapper>{children}</AppWrapper>
           </SidebarProvider>
-          <Toaster />
         </ThemeProvider>
       </body>
     </html>

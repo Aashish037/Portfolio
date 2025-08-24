@@ -21,23 +21,42 @@
       "AWS",
       "Python"
     ],
-    "resumeUrl": "/resume.pdf",
-    "profileImage": "https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg"
+    "resumeUrl": "/documents/Asish_resume.pdf",
+    "profileImage": "/images/photo.jpg"
   },
   "experience": [
     {
       "role": "Junior React Native Developer",
       "company": "Kus Software",
       "duration": "June-2025 - Present",
-      "details": "Developed and maintained mobile applications using React Native. Integrating with backend services and APIs. Collaborated with designers to implement pixel-perfect designs.",
-      "tech": [
-        "React Native",
-        "JavaScript",
-        "Firebase",
-        "Redux",
-        "Expo",
-        "Android Studio"
-      ]
+      "projects": [
+            {
+                "name": "Roadside Launch",
+                "url": "https://play.google.com/store/apps/details?id=com.roadsidelaunch",
+                "details": "Developed key features including user authentication. Integrated with Firebase for data storage and push notifications.",
+                "tech": [
+                    "React Native",
+                    "Firebase",
+                    "Redux",
+                    "Android Studio",
+                    "Google Maps",
+                    "other"
+                ]
+            },
+            {
+                "name": "Rline Taxis Driver",
+                "url": "https://play.google.com/store/apps/details?id=com.rlinetaxisdriver.app",
+                "details": "Developed key features like Google Maps integration and user authentication.",
+                "tech": [
+                    "Kotlin",
+                    "Firebase",
+                    "Redux",
+                    "Android Studio",
+                    "Google Maps",
+                    "+other"
+                ]
+            }
+        ]
     }
   ],
   "projects": [

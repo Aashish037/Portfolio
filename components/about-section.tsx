@@ -22,6 +22,39 @@ import {
 import data from "@/data/data.json";
 
 export function AboutSection() {
+  // React-compliant: call hooks explicitly for each animated item
+  // Stats (3)
+  const statHook0 = useScrollAnimation();
+  const statHook1 = useScrollAnimation();
+  const statHook2 = useScrollAnimation();
+  const statHooks = [statHook0, statHook1, statHook2];
+
+  // Skills (up to 8)
+  const skillHook0 = useScrollAnimation();
+  const skillHook1 = useScrollAnimation();
+  const skillHook2 = useScrollAnimation();
+  const skillHook3 = useScrollAnimation();
+  const skillHook4 = useScrollAnimation();
+  const skillHook5 = useScrollAnimation();
+  const skillHook6 = useScrollAnimation();
+  const skillHook7 = useScrollAnimation();
+  const skillHooks = [
+    skillHook0,
+    skillHook1,
+    skillHook2,
+    skillHook3,
+    skillHook4,
+    skillHook5,
+    skillHook6,
+    skillHook7,
+  ];
+
+  // Fun Facts (4)
+  const funFactHook0 = useScrollAnimation();
+  const funFactHook1 = useScrollAnimation();
+  const funFactHook2 = useScrollAnimation();
+  const funFactHook3 = useScrollAnimation();
+  const funFactHooks = [funFactHook0, funFactHook1, funFactHook2, funFactHook3];
   const { about } = data;
   const [activeTab, setActiveTab] = useState("journey");
 
@@ -124,8 +157,7 @@ export function AboutSection() {
         {/* Stats Cards with Hover Effects */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {stats.map((stat, index) => {
-            const { elementRef, isVisible } = useScrollAnimation();
-
+            const { elementRef, isVisible } = statHooks[index];
             return (
               <Card
                 key={stat.title}
@@ -173,7 +205,7 @@ export function AboutSection() {
           <div className="space-y-8">
             <div>
               <h2 className="text-3xl font-bold mb-2">
-                Hello, I'm {about.name}
+                Hello, I&apos;m {about.name}
               </h2>
               <h3 className="text-xl text-blue-600 font-semibold mb-6">
                 {about.tagline}
@@ -234,9 +266,8 @@ export function AboutSection() {
             </div>
 
             <div className="flex flex-wrap gap-3">
-              {about.skills.map((skill, index) => {
-                const { elementRef, isVisible } = useScrollAnimation();
-
+              {about.skills.slice(0, 8).map((skill, index) => {
+                const { elementRef, isVisible } = skillHooks[index];
                 return (
                   <div
                     key={skill}
@@ -279,8 +310,7 @@ export function AboutSection() {
             </h3>
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
               {funFacts.map((fact, index) => {
-                const { elementRef, isVisible } = useScrollAnimation();
-
+                const { elementRef, isVisible } = funFactHooks[index];
                 return (
                   <div
                     key={fact.label}

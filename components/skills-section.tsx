@@ -54,35 +54,147 @@ const skillCategories: SkillCategory[] = [
   {
     title: "Databases",
     icon: <Database className="h-6 w-6" />,
-    skills: ["MongoDB", "PostgreSQL", "Firebase", "MySQL", "Redis"],
+    skills: ["MongoDB", "PostgreSQL", "Firebase", "MySQL"],
   },
   {
     title: "Mobile",
     icon: <Smartphone className="h-6 w-6" />,
-    skills: ["React Native", "Expo", "Native Android", "iOS Development"],
+    skills: [
+      "React Native",
+      "Expo",
+      "Native Android",
+      "iOS Development",
+      "Android Database",
+    ],
   },
   {
     title: "Tools & Technologies",
     icon: <Wrench className="h-6 w-6" />,
-    skills: ["Git/GitHub", "Docker", "AWS", "Vercel", "Figma", "VS Code"],
+    skills: [
+      "Git/GitHub",
+      "Docker",
+      "AWS",
+      "Vercel",
+      "Figma",
+      "VS Code",
+      "Android Studio",
+      "Postman",
+    ],
   },
   {
     title: "DevOps & Cloud",
     icon: <Cloud className="h-6 w-6" />,
-    skills: ["AWS", "Docker", "CI/CD", "Nginx", "Vercel", "Netlify"],
+    skills: ["AWS", "Docker", "CI/CD", "Nginx", "Vercel"],
   },
 ];
 
 const featuredSkills: Skill[] = [
-  { name: "React", level: "Expert" },
-  { name: "Next.js", level: "Advanced" },
+  { name: "React", level: "Advanced" },
+  { name: "Next.js", level: "Intermediate" },
   { name: "TypeScript", level: "Advanced" },
   { name: "Node.js", level: "Advanced" },
-  { name: "React Native", level: "Advanced" },
+  { name: "React Native", level: "Intermediate" },
   { name: "PostgreSQL", level: "Intermediate" },
 ];
 
 export function SkillsSection() {
+  // --- React-compliant: all hooks at top level ---
+  const MAX_SKILLS = 8;
+  const MAX_CATEGORIES = skillCategories.length;
+  const MAX_FEATURED = 12;
+
+  // Precompute hooks for featured skills (up to 12)
+  const featuredSkillHooks = [
+    useScrollAnimation(),
+    useScrollAnimation(),
+    useScrollAnimation(),
+    useScrollAnimation(),
+    useScrollAnimation(),
+    useScrollAnimation(),
+    useScrollAnimation(),
+    useScrollAnimation(),
+    useScrollAnimation(),
+    useScrollAnimation(),
+    useScrollAnimation(),
+    useScrollAnimation(),
+  ];
+
+  // Precompute hooks for each category card
+  const categoryCardHooks = [
+    useScrollAnimation(),
+    useScrollAnimation(),
+    useScrollAnimation(),
+    useScrollAnimation(),
+    useScrollAnimation(),
+    useScrollAnimation(),
+  ];
+
+  // Precompute hooks for each skill badge in each category
+  const categorySkillHooks: Array<
+    Array<ReturnType<typeof useScrollAnimation>>
+  > = [
+    [
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+    ],
+    [
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+    ],
+    [
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+    ],
+    [
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+    ],
+    [
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+    ],
+    [
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+      useScrollAnimation(),
+    ],
+  ];
+
   return (
     <section className="p-6 lg:p-12">
       <div className="max-w-7xl mx-auto space-y-16">
@@ -108,9 +220,8 @@ export function SkillsSection() {
           </p>
 
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-            {featuredSkills.map((skill, index) => {
-              const { elementRef, isVisible } = useScrollAnimation();
-
+            {featuredSkills.slice(0, MAX_FEATURED).map((skill, index) => {
+              const { elementRef, isVisible } = featuredSkillHooks[index];
               return (
                 <Card
                   key={skill.name}
@@ -158,9 +269,8 @@ export function SkillsSection() {
 
         {/* Skill Categories */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {skillCategories.map((category, index) => {
-            const { elementRef, isVisible } = useScrollAnimation();
-
+          {skillCategories.map((category, catIdx) => {
+            const { elementRef, isVisible } = categoryCardHooks[catIdx];
             return (
               <Card
                 key={category.title}
@@ -177,13 +287,13 @@ export function SkillsSection() {
                   scroll-trigger
                   ${isVisible ? "animate" : ""}
                   ${
-                    index % 2 === 0
+                    catIdx % 2 === 0
                       ? "slide-in-from-left-4"
                       : "slide-in-from-right-4"
                   }
                 `}
                 style={{
-                  transitionDelay: `${index * 150}ms`,
+                  transitionDelay: `${catIdx * 150}ms`,
                 }}
               >
                 <CardHeader className="pb-3">
@@ -199,25 +309,28 @@ export function SkillsSection() {
 
                 <CardContent className="space-y-3">
                   <div className="flex flex-wrap gap-2">
-                    {category.skills.map((skill, skillIndex) => {
-                      const { elementRef: skillRef, isVisible: skillVisible } =
-                        useScrollAnimation();
-
-                      return (
-                        <div
-                          key={skill}
-                          ref={skillRef}
-                          className={`
+                    {category.skills
+                      .slice(0, MAX_SKILLS)
+                      .map((skill, skillIndex) => {
+                        const {
+                          elementRef: skillRef,
+                          isVisible: skillVisible,
+                        } = categorySkillHooks[catIdx][skillIndex];
+                        return (
+                          <div
+                            key={skill}
+                            ref={skillRef}
+                            className={`
                             badge-scroll-trigger
                             ${skillVisible ? "animate" : ""}
                           `}
-                          style={{
-                            transitionDelay: `${skillIndex * 50}ms`,
-                          }}
-                        >
-                          <Badge
-                            variant="outline"
-                            className="
+                            style={{
+                              transitionDelay: `${skillIndex * 50}ms`,
+                            }}
+                          >
+                            <Badge
+                              variant="outline"
+                              className="
                               text-xs font-medium
                               bg-muted/30 hover:bg-blue-500/20
                               text-muted-foreground hover:text-blue-300
@@ -226,12 +339,12 @@ export function SkillsSection() {
                               hover:scale-105 hover:shadow-md
                               transform hover:-translate-y-0.5
                             "
-                          >
-                            {skill}
-                          </Badge>
-                        </div>
-                      );
-                    })}
+                            >
+                              {skill}
+                            </Badge>
+                          </div>
+                        );
+                      })}
                   </div>
                 </CardContent>
               </Card>
