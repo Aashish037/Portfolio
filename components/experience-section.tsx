@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
@@ -251,12 +252,12 @@ export function ExperienceSection() {
               >
                 Let&apos;s Talk
               </a>
-              <a
+              <Link
                 href="/projects"
                 className="inline-flex items-center justify-center px-6 py-3 border border-border bg-card/50 hover:bg-card text-foreground font-medium rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-lg"
               >
                 View My Work
-              </a>
+              </Link>
             </div>
           </Card>
         </div>

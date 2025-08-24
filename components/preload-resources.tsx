@@ -3,19 +3,6 @@ import Head from "next/head";
 export function PreloadResources() {
   return (
     <Head>
-      {/* Preload critical fonts */}
-      <link
-        rel="preload"
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
-        as="style"
-        // @ts-ignore
-        onLoad={(e) => {
-          const link = e.currentTarget as HTMLLinkElement;
-          link.onload = null;
-          link.rel = "stylesheet";
-        }}
-      />
-
       {/* Preload critical images */}
       <link
         rel="preload"

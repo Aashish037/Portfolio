@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -324,10 +325,11 @@ export function ProjectsGrid({ projects }: ProjectsGridProps) {
             {/* Image & Hover Overlay */}
             <div className="aspect-video relative overflow-hidden rounded-t-2xl">
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10" />
-              <img
+              <Image
                 src={project.image}
                 alt={project.title}
-                className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110 group-hover:rotate-1"
+                fill
+                className="object-cover transition-all duration-700 group-hover:scale-110 group-hover:rotate-1"
               />
               <div className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center space-x-4 z-20">
                 {project.github && (

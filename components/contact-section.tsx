@@ -18,6 +18,13 @@ import {
 import emailjs from "@emailjs/browser";
 import data from "@/data/data.json";
 
+// Type for contact data
+interface ContactData {
+  email?: string;
+  phone?: string;
+  location?: string;
+}
+
 export function ContactSection() {
   // React-compliant: call hooks explicitly for each contact info item (3)
   const contactInfoHook0 = useScrollAnimation();
@@ -39,10 +46,10 @@ export function ContactSection() {
   const [errorMessage, setErrorMessage] = useState("");
 
   // Defensive: fallback to empty object if contact is missing
-  const { contact = {} } = data;
-  const email = (contact as any)?.email || "";
-  const phone = (contact as any)?.phone || "";
-  const location = (contact as any)?.location || "";
+  const contact: ContactData = data.contact || {};
+  const email = contact.email || "";
+  const phone = contact.phone || "";
+  const location = contact.location || "";
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -95,7 +102,7 @@ export function ContactSection() {
           serviceId,
           templateId,
           {
-            to_email: (contact as any)?.email || "",
+            to_email: contact.email || "",
             from_name: formData.name,
             from_email: formData.email,
             subject: formData.subject || "Contact from Portfolio",
@@ -109,7 +116,7 @@ export function ContactSection() {
           serviceId,
           templateId,
           {
-            to_email: (contact as any)?.email || "",
+            to_email: contact.email || "",
             from_name: formData.name,
             from_email: formData.email,
             subject: formData.subject || "Contact from Portfolio",
@@ -153,7 +160,7 @@ export function ContactSection() {
       label: "Location",
       value: location,
       href: location
-        ? `https://maps.google.com/?q=${encodeURIComponent(location)}`
+        ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(location)}`
         : undefined,
     },
   ];

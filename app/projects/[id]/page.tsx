@@ -15,9 +15,9 @@ import {
 import data from "@/data/data.json";
 
 interface ProjectPageProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 export function generateStaticParams() {
@@ -26,8 +26,9 @@ export function generateStaticParams() {
   }));
 }
 
-export function generateMetadata({ params }: ProjectPageProps) {
-  const project = data.projects.find((p) => p.id === params.id);
+export async function generateMetadata({ params }: ProjectPageProps) {
+  const { id } = await params;
+  const project = data.projects.find((p) => p.id === id);
 
   if (!project) {
     return {
@@ -46,8 +47,9 @@ export function generateMetadata({ params }: ProjectPageProps) {
   };
 }
 
-export default function ProjectDetail({ params }: ProjectPageProps) {
-  const project = data.projects.find((p) => p.id === params.id);
+export default async function ProjectDetail({ params }: ProjectPageProps) {
+  const { id } = await params;
+  const project = data.projects.find((p) => p.id === id);
 
   if (!project) {
     notFound();
@@ -206,8 +208,8 @@ export default function ProjectDetail({ params }: ProjectPageProps) {
                   Interested in Similar Work?
                 </h3>
                 <p className="text-sm text-muted-foreground">
-                  Let&apos;s discuss your project requirements and see how I can help
-                  bring your ideas to life.
+                  Let&apos;s discuss your project requirements and see how I can
+                  help bring your ideas to life.
                 </p>
                 <Button
                   size="sm"
