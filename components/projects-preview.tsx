@@ -134,7 +134,7 @@ export function ProjectsPreview() {
                     src={project.image}
                     alt={project.title}
                     fill
-                    className="object-cover transition-all duration-700 group-hover:scale-110 group-hover:rotate-1"
+                    className="object-contain transition-all  duration-700 group-hover:scale-110 group-hover:rotate-1"
                   />
                   <div className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center space-x-4 z-20">
                     {project.github && (
