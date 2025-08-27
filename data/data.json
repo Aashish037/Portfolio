@@ -88,7 +88,7 @@
         "Appwrite",
         "React Native"
       ],
-      "image": "https://images.pexels.com/photos/3183153/pexels-photo-3183153.jpeg",
+      "image": "/images/GrubHub.png",
       "github": "https://github.com/Aashish037/GrubHub",
       "demo": "",
       "challenges": "Simulating real-world order flows and testing the app's performance and scalability without live user data or a delivery network.",
