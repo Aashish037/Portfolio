@@ -2,8 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { Card } from "@/components/ui/card";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import { Building2, Calendar, Sparkles } from "lucide-react";
 import data from "@/data/data.json";
@@ -171,56 +170,29 @@ export function ExperienceSection() {
                           </div>
                         </div>
 
-                        {/* Projects Section */}
-                        <div className="space-y-4 mt-4">
-                          {exp.projects &&
-                            exp.projects.map((project, pIdx) => {
+                        {/* Work Section */}
+                        <div className="space-y-3 mt-4">
+                          {exp.Work &&
+                            exp.Work.map((workItem, wIdx) => {
                               const {
-                                elementRef: projRef,
-                                isVisible: projVisible,
-                              } = projHooks[pIdx];
+                                elementRef: workRef,
+                                isVisible: workVisible,
+                              } = projHooks[wIdx];
                               return (
                                 <div
-                                  key={project.name}
-                                  ref={projRef}
+                                  key={wIdx}
+                                  ref={workRef}
                                   className={`badge-scroll-trigger ${
-                                    projVisible ? "animate" : ""
+                                    workVisible ? "animate" : ""
                                   }`}
-                                  style={{ transitionDelay: `${pIdx * 100}ms` }}
+                                  style={{ transitionDelay: `${wIdx * 100}ms` }}
                                 >
-                                  <Card className="mb-2 bg-background/80 border border-border/40 shadow-none hover:shadow-lg transition-all duration-300 group-hover:border-blue-400/40">
-                                    <CardHeader className="flex flex-row items-center gap-3 p-4 pb-2">
-                                      <CardTitle className="text-lg font-semibold text-blue-500 flex-1">
-                                        <a
-                                          href={project.url}
-                                          target="_blank"
-                                          rel="noopener noreferrer"
-                                          className="hover:underline"
-                                        >
-                                          {project.name}
-                                        </a>
-                                      </CardTitle>
-                                      <div className="flex flex-wrap gap-1">
-                                        {project.tech.map((tech, tIdx) => (
-                                          <Badge
-                                            key={tech}
-                                            variant="outline"
-                                            className="text-xs font-medium bg-muted/30 hover:bg-blue-500/20 text-muted-foreground hover:text-blue-300 border-border hover:border-blue-500/50 transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-blue-500/20 transform hover:-translate-y-1 group-hover:border-blue-400/50"
-                                            style={{
-                                              transitionDelay: `${tIdx * 40}ms`,
-                                            }}
-                                          >
-                                            {tech}
-                                          </Badge>
-                                        ))}
-                                      </div>
-                                    </CardHeader>
-                                    <CardContent className="p-4 pt-0">
-                                      <p className="text-muted-foreground text-base mb-2">
-                                        {project.details}
-                                      </p>
-                                    </CardContent>
-                                  </Card>
+                                  <div className="flex items-start gap-3 p-3 rounded-lg bg-background/50 border border-border/30 hover:bg-background/80 hover:border-blue-400/40 transition-all duration-300">
+                                    <Sparkles className="h-5 w-5 text-blue-500 mt-0.5 flex-shrink-0" />
+                                    <p className="text-muted-foreground text-base leading-relaxed">
+                                      {workItem}
+                                    </p>
+                                  </div>
                                 </div>
                               );
                             })}

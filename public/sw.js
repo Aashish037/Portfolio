@@ -6,7 +6,7 @@ const urlsToCache = [
   "/skills",
   "/contact",
   "/globals.css",
-  "/documents/Asish_resume.pdf",
+  "/documents/Asish-Kumar-Singh-Resume.pdf",
   "/images/Chess.png",
   "/images/letsMeet.png",
   "https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg",
